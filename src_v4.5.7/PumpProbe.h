@@ -30,6 +30,10 @@ public:
 			error_message("laserPoltype must be LC, RC, Ex or Ey");
 	}
 
+	vector3<complex> set_PolVec(vector3<double> r, vector3<double> i){
+		return normalize(complex(1, 0)*r + complex(0, 1)*i);
+	}
+
 	inline void print(const vector3<complex>& v, const char* format = "%lg "){
 		printf("[ "); for (int k = 0; k<3; k++) printf(format, v[k].real()); printf("] + 1j*");
 		printf("[ "); for (int k = 0; k<3; k++) printf(format, v[k].imag()); printf("]\n");

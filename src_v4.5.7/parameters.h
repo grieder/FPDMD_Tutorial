@@ -20,6 +20,7 @@ public:
 	double degthr;
 	bool rotate_spin_axes;
 	vector3<double> sdir_z, sdir_y, sdir_x; // redefined spin directions
+	vector3<double> realPump, imagPump; // define pump 
 	matrix3<double> sdir_rot;
 	bool need_imsig;
 	double scissor;

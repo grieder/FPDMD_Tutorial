@@ -142,6 +142,9 @@ void parameters::read_param(){
 	if (ionode) printf("\n**************************************************\n");
 	if (ionode) printf("System and external condition parameters:\n");
 	if (ionode) printf("**************************************************\n");
+
+	temperature = get(param_map, "temperature", 300, Kelvin);
+
 	if (material_model != "none"){
 		temperature = get(param_map, "temperature", 300, Kelvin);
 
@@ -263,7 +266,13 @@ void parameters::read_param(){
 	if (pmp.laserA > 0){
 		string pumpPoltype = getString(param_map, "pumpPoltype", "NONE");
 		pmp.laserPoltype = getString(param_map, "laserPoltype", pumpPoltype);
-		pmp.laserPol = pmp.set_Pol(pmp.laserPoltype);
+        if (pmp.laserPoltype == "from_vector"){
+	        realPump = normalize(getVector(param_map, "realPump"));//, vector3<>(1., 0., 0.)));
+	        imagPump = normalize(getVector(param_map, "imagPump"));//, vector3<>(0., 0., 0.)));
+		    pmp.laserPol = pmp.set_PolVec(realPump, imagPump);
+        }
+        else
+		    pmp.laserPol = pmp.set_Pol(pmp.laserPoltype);
 		if (ionode) { pmp.print(pmp.laserPol); }
 		while (true){
 			int iPol = int(pmp.probePol.size()) + 1;
